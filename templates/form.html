@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Approval Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        input[type="submit"], button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button {
+            background-color: #f44336;
+            color: white;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Loan Approval Prediction</h1>
+        <form method="POST">
+            <label>Gender:</label>
+            <select name="Gender">
+                <option {{ 'selected' if form_data.Gender == 'Male' }}>Male</option>
+                <option {{ 'selected' if form_data.Gender == 'Female' }}>Female</option>
+            </select>
+
+            <label>Married:</label>
+            <select name="Married">
+                <option {{ 'selected' if form_data.Married == 'Yes' }}>Yes</option>
+                <option {{ 'selected' if form_data.Married == 'No' }}>No</option>
+            </select>
+
+            <label>Dependents:</label>
+            <select name="Dependents">
+                <option {{ 'selected' if form_data.Dependents == '0' }}>0</option>
+                <option {{ 'selected' if form_data.Dependents == '1' }}>1</option>
+                <option {{ 'selected' if form_data.Dependents == '2' }}>2</option>
+                <option {{ 'selected' if form_data.Dependents == '3+' }}>3+</option>
+            </select>
+
+            <label>Education:</label>
+            <select name="Education">
+                <option {{ 'selected' if form_data.Education == 'Graduate' }}>Graduate</option>
+                <option {{ 'selected' if form_data.Education == 'Not Graduate' }}>Not Graduate</option>
+            </select>
+
+            <label>Self Employed:</label>
+            <select name="Self_Employed">
+                <option {{ 'selected' if form_data.Self_Employed == 'Yes' }}>Yes</option>
+                <option {{ 'selected' if form_data.Self_Employed == 'No' }}>No</option>
+            </select>
+
+            <label>Applicant Income:</label>
+            <input type="number" name="ApplicantIncome" value="{{ form_data.ApplicantIncome or '' }}" required>
+
+            <label>Coapplicant Income:</label>
+            <input type="number" name="CoapplicantIncome" value="{{ form_data.CoapplicantIncome or '' }}" required>
+
+            <label>Loan Amount:</label>
+            <input type="number" name="LoanAmount" value="{{ form_data.LoanAmount or '' }}" required>
+
+            <label>Loan Amount Term:</label>
+            <input type="number" name="Loan_Amount_Term" value="{{ form_data.Loan_Amount_Term or '' }}" required>
+
+            <label>Credit History (1=Good, 0=Bad):</label>
+            <select name="Credit_History">
+                <option value="1.0" {{ 'selected' if form_data.Credit_History == '1.0' }}>1.0</option>
+                <option value="0.0" {{ 'selected' if form_data.Credit_History == '0.0' }}>0.0</option>
+            </select>
+
+            <label>Property Area:</label>
+            <select name="Property_Area">
+                <option {{ 'selected' if form_data.Property_Area == 'Urban' }}>Urban</option>
+                <option {{ 'selected' if form_data.Property_Area == 'Semiurban' }}>Semiurban</option>
+                <option {{ 'selected' if form_data.Property_Area == 'Rural' }}>Rural</option>
+            </select>
+
+            <div class="buttons">
+                <input type="submit" value="Predict">
+                <button type="button" onclick="window.location.href='/'">Refresh</button>
+            </div>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            Result: {{ prediction }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
